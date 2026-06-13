@@ -25,26 +25,26 @@
     <style>
         /* ==================== VARIABLES ==================== */
         :root {
-            --primary: #00D632; /* Cash App Green */
-            --primary-dark: #00b027;
-            --primary-light: #52f277;
-            --primary-gradient: #00D632;
+            --primary: #1C5CCF; /* Pesso Blue */
+            --primary-dark: #154aad;
+            --primary-light: #4A9EFF;
+            --primary-gradient: #1C5CCF;
             --bg: #F4F4F6;
             --bg-dark: #EBEBEF;
             --bg-card: #ffffff;
             --text: #000000;
             --text-secondary: #8E8E93;
-            --success: #00D632;
+            --success: #1C5CCF;
             --card-shadow: 0 4px 20px rgba(0,0,0,0.02);
             --glow: none;
             --border-color: rgba(0, 0, 0, 0.06);
         }
 
         [data-theme="dark"] {
-            --primary: #00D632;
-            --primary-dark: #00b027;
-            --primary-light: #52f277;
-            --primary-gradient: #00D632;
+            --primary: #1C5CCF;
+            --primary-dark: #154aad;
+            --primary-light: #4A9EFF;
+            --primary-gradient: #1C5CCF;
             --bg: #000000;
             --bg-dark: #0A0A0C;
             --bg-card: #121214;
@@ -226,19 +226,19 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(0, 214, 50, 0.1);
+            background: rgba(28, 92, 207, 0.1);
             color: var(--primary);
             padding: 8px 16px;
             border-radius: 50px;
             font-size: 14px;
             font-weight: 600;
             margin-bottom: 28px;
-            border: 1px solid rgba(0, 214, 50, 0.2);
+            border: 1px solid rgba(28, 92, 207, 0.2);
         }
 
         [data-theme="dark"] .hero-badge {
-            background: rgba(0, 214, 50, 0.15);
-            border-color: rgba(0, 214, 50, 0.25);
+            background: rgba(28, 92, 207, 0.15);
+            border-color: rgba(28, 92, 207, 0.25);
         }
 
         /* TÍTULO CON LOGO INTEGRADO MÁS GRANDE */
@@ -334,25 +334,23 @@
             width: 320px;
             height: 640px;
             background: var(--bg);
-            border-radius: 48px;
+            border-radius: 44px;
             box-shadow: 
-                0 0 0 14px #1a1a1a,
-                0 0 0 16px #333,
-                0 30px 60px -15px rgba(0,0,0,0.3);
+                0 0 0 12px #121212,
+                0 0 0 13px #2c2c2c,
+                0 20px 50px rgba(0,0,0,0.15);
             overflow: hidden;
             position: relative;
-            transform: rotateY(-5deg) rotateX(5deg);
-            transition: transform 0.5s ease;
-            animation: float 6s ease-in-out infinite;
+            transform: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .phone:hover {
-            transform: rotateY(0deg) rotateX(0deg) scale(1.02);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: rotateY(-5deg) rotateX(5deg) translateY(0); }
-            50% { transform: rotateY(-5deg) rotateX(5deg) translateY(-20px); }
+            transform: scale(1.02);
+            box-shadow: 
+                0 0 0 12px #121212,
+                0 0 0 13px #2c2c2c,
+                0 25px 60px rgba(0,0,0,0.25);
         }
 
         .phone-notch {
@@ -505,7 +503,7 @@
         .feature-icon {
             width: 56px;
             height: 56px;
-            background: rgba(0, 214, 50, 0.1);
+            background: rgba(28, 92, 207, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -517,7 +515,7 @@
         }
 
         [data-theme="dark"] .feature-icon {
-            background: rgba(0, 214, 50, 0.15);
+            background: rgba(28, 92, 207, 0.15);
         }
 
         .feature-card:hover .feature-icon {
@@ -694,8 +692,9 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            text-align: center;
             flex-wrap: wrap;
             gap: 30px;
         }
@@ -1070,11 +1069,6 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <p class="footer-text">© 2026 Pesso. Hecho con ❤️ para ahorradores inteligentes</p>
-            </div>
-            <div class="footer-links">
-                <a href="#" class="footer-link">Privacidad</a>
-                <a href="#" class="footer-link">Términos</a>
-                <a href="#" class="footer-link">Contacto</a>
             </div>
         </div>
     </footer>
