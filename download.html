@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1C5CCF" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <meta name="description" content="Pesso - Tu app de ahorro personal. Gestiona tus metas de ahorro de forma simple y segura.">
+    <title>Pesso - Ahorra Inteligente</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/icon/icon-192.png">
+
+    <!-- Google Fonts - Varela Round -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        /* ==================== VARIABLES ==================== */
+        :root {
+            --primary: #1C5CCF;
+            --primary-dark: #154aad;
+            --primary-light: #4A9EFF;
+            --primary-gradient: linear-gradient(135deg, #1C5CCF 0%, #4A9EFF 100%);
+            --bg: #ffffff;
+            --bg-dark: #f5f5f7;
+            --bg-card: #f2f2f7;
+            --text: #000000;
+            --text-secondary: #8e8e93;
+            --success: #34c759;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --glow: 0 0 40px rgba(28, 92, 207, 0.3);
+        }
+
+        [data-theme="dark"] {
+            --primary: #4A9EFF;
+            --primary-dark: #0A84FF;
+            --primary-light: #5AC8FA;
+            --primary-gradient: linear-gradient(135deg, #4A9EFF 0%, #5AC8FA 100%);
+            --bg: #121212;
+            --bg-dark: #1E1E1E;
+            --bg-card: #2C2C2E;
+            --text: #E8ECF4;
+            --text-secondary: #8B92A8;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            --glow: 0 0 40px rgba(74, 158, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ==================== NAVBAR ==================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: env(safe-area-inset-top) 24px 16px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(18, 18, 18, 0.8);
+            border-bottom-color: rgba(255,255,255,0.05);
+        }
+
+        .navbar.scrolled {
+            padding: env(safe-area-inset-top) 24px 12px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] .navbar.scrolled {
+            background: rgba(18, 18, 18, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* LOGO MÁS GRANDE Y DESTACADO */
+        .logo {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -1px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-card);
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(180deg);
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: calc(120px + env(safe-area-inset-top)) 20px 60px;
+            background: linear-gradient(180deg, var(--bg) 0%, var(--bg-dark) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(28, 92, 207, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        [data-theme="dark"] .hero::before {
+            background: radial-gradient(circle, rgba(74, 158, 255, 0.15) 0%, transparent 70%);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(28, 92, 207, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(28, 92, 207, 0.1);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 28px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(28, 92, 207, 0.2);
+        }
+
+        [data-theme="dark"] .hero-badge {
+            background: rgba(74, 158, 255, 0.15);
+            border-color: rgba(74, 158, 255, 0.3);
+        }
+
+        /* TÍTULO CON LOGO INTEGRADO MÁS GRANDE */
+        .hero-title {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+        }
+
+        .hero-title .brand {
+            font-family: 'Varela Round', sans-serif;
+            color: var(--primary);
+            font-weight: 400;
+            font-size: 1.2em;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-title .brand::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--primary);
+            opacity: 0.2;
+            border-radius: 4px;
+            z-index: -1;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 480px;
+            line-height: 1.5;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px 36px;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 20px rgba(28, 92, 207, 0.4), var(--glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(28, 92, 207, 0.5), var(--glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text);
+            border: 2px solid transparent;
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-secondary);
+            color: white;
+            border-color: var(--text-secondary);
+            transform: translateY(-3px);
+        }
+
+        /* ==================== PHONE MOCKUP MEJORADO ==================== */
+        .phone-mockup {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            z-index: 1;
+            perspective: 1000px;
+        }
+
+        .phone {
+            width: 320px;
+            height: 640px;
+            background: var(--bg);
+            border-radius: 48px;
+            box-shadow: 
+                0 0 0 14px #1a1a1a,
+                0 0 0 16px #333,
+                0 30px 60px -15px rgba(0,0,0,0.5),
+                0 50px 100px -20px rgba(28, 92, 207, 0.2);
+            overflow: hidden;
+            position: relative;
+            transform: rotateY(-5deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .phone:hover {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: rotateY(-5deg) rotateX(5deg) translateY(0); }
+            50% { transform: rotateY(-5deg) rotateX(5deg) translateY(-20px); }
+        }
+
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 32px;
+            background: #1a1a1a;
+            border-radius: 0 0 24px 24px;
+            z-index: 10;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 60px 28px 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* LOGO EN EL TELÉFONO MÁS GRANDE */
+        .phone-logo {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 60px;
+            color: white;
+            margin-bottom: 50px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .phone-logo::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            z-index: -1;
+            backdrop-filter: blur(10px);
+        }
+
+        .phone-pin {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+
+        .phone-pin-dot {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .phone-pin-dot.filled {
+            background: white;
+            border-color: white;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .phone-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            width: 100%;
+        }
+
+        .phone-key {
+            aspect-ratio: 1;
+            background: rgba(255,255,255,0.12);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 26px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .phone-key:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.1);
+        }
+
+        .phone-key:active {
+            transform: scale(0.95);
+        }
+
+        /* ==================== FEATURES MEJORADAS ==================== */
+        .features {
+            padding: 120px 20px;
+            background: var(--bg);
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 28px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-shadow), 0 20px 40px rgba(28, 92, 207, 0.1);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 20px rgba(28, 92, 207, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-text {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* ==================== DOWNLOAD SECTION MEJORADA ==================== */
+        .download {
+            padding: 120px 20px;
+            background: var(--bg-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(28, 92, 207, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .download-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .download-title .brand {
+            font-family: 'Varela Round', sans-serif;
+            color: var(--primary);
+            font-weight: 400;
+        }
+
+        .download-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+        }
+
+        /* ==================== INSTALL STEPS MEJORADOS ==================== */
+        .install-steps {
+            background: var(--bg);
+            border-radius: 32px;
+            padding: 50px;
+            text-align: left;
+            box-shadow: var(--card-shadow), 0 30px 60px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .install-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .step {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 36px;
+            align-items: flex-start;
+            padding: 24px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            background: var(--bg-card);
+            transform: translateX(10px);
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(28, 92, 207, 0.4);
+        }
+
+        .step-content h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .ios-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-card);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            margin: 0 4px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* ==================== CTA SECTION MEJORADA ==================== */
+        .cta {
+            padding: 100px 20px;
+            background: var(--primary-gradient);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta-title {
+            font-size: 40px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-text {
+            font-size: 20px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        /* ==================== FOOTER MEJORADO ==================== */
+        .footer {
+            padding: 60px 20px 40px;
+            background: var(--bg);
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-logo {
+            font-family: 'Varela Round', sans-serif;
+            font-size: 36px;
+            color: var(--primary);
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .footer-link:hover::after {
+            width: 100%;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 900px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 60px;
+            }
+
+            .hero-content {
+                order: 1;
+            }
+
+            .phone-mockup {
+                order: 0;
+            }
+
+            .phone {
+                width: 280px;
+                height: 560px;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-subtitle {
+                margin: 0 auto 40px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo {
+                font-size: 36px;
+            }
+
+            .section-title,
+            .download-title {
+                font-size: 36px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding-top: calc(100px + env(safe-area-inset-top));
+            }
+
+            .hero-title {
+                font-size: 40px;
+            }
+
+            .install-steps {
+                padding: 30px 20px;
+            }
+
+            .step {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">pesso</a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#download" class="nav-link">Download</a>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">
+                    <ion-icon name="moon-outline" id="themeIcon"></ion-icon>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge animate-in">
+                    <ion-icon name="sparkles"></ion-icon>
+                    Gratis para siempre
+                </div>
+                <h1 class="hero-title animate-in delay-1">
+                    Ahorra inteligente con <span class="brand">pesso</span>
+                </h1>
+                <p class="hero-subtitle animate-in delay-2">
+                    Gestiona tus metas de ahorro de forma simple y segura. 
+                    Crea sobres virtuales, establece objetivos y alcanza tus sueños.
+                </p>
+                <div class="hero-buttons animate-in delay-3">
+                    <a href="#download" class="btn btn-primary">
+                        <ion-icon name="download-outline"></ion-icon>
+                        Instalar en iOS
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        <ion-icon name="eye-outline"></ion-icon>
+                        Conocer más
+                    </a>
+                </div>
+            </div>
+
+            <div class="phone-mockup animate-in delay-2">
+                <div class="phone">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="phone-logo">pesso</div>
+                        <div class="phone-pin">
+                            <div class="phone-pin-dot filled"></div>
+                            <div class="phone-pin-dot filled"></div>
+                            <div class="phone-pin-dot"></div>
+                            <div class="phone-pin-dot"></div>
+                        </div>
+                        <div class="phone-pad">
+                            <div class="phone-key">1</div>
+                            <div class="phone-key">2</div>
+                            <div class="phone-key">3</div>
+                            <div class="phone-key">4</div>
+                            <div class="phone-key">5</div>
+                            <div class="phone-key">6</div>
+                            <div class="phone-key">7</div>
+                            <div class="phone-key">8</div>
+                            <div class="phone-key">9</div>
+                            <div class="phone-key">
+                                <ion-icon name="finger-print-outline"></ion-icon>
+                            </div>
+                            <div class="phone-key">0</div>
+                            <div class="phone-key">
+                                <ion-icon name="backspace-outline"></ion-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Todo lo que necesitas</h2>
+                <p class="section-subtitle">Herramientas simples pero poderosas para gestionar tu dinero y alcanzar tus metas</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <ion-icon name="wallet-outline"></ion-icon>
+                    </div>
+                    <h3 class="feature-title">Sobres de Ahorro</h3>
+                    <p class="feature-text">Crea sobres virtuales para diferentes objetivos: viajes, coche, emergencias y más. Organiza tu dinero visualmente.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <ion-icon name="flag-outline"></ion-icon>
+                    </div>
+                    <h3 class="feature-title">Metas Claras</h3>
+                    <p class="feature-text">Establece montos objetivo y fechas límite. Visualiza tu progreso con barras animadas y celebraciones al completar.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <ion-icon name="swap-horizontal-outline"></ion-icon>
+                    </div>
+                    <h3 class="feature-title">Transferencias</h3>
+                    <p class="feature-text">Mueve dinero entre sobres instantáneamente. Sin complicaciones ni esperas. Todo en tiempo real.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <ion-icon name="shield-checkmark-outline"></ion-icon>
+                    </div>
+                    <h3 class="feature-title">100% Privado</h3>
+                    <p class="feature-text">Tus datos se guardan localmente en tu dispositivo. Sin servidores externos, sin tracking, 100% tuyo.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <ion-icon name="moon-outline"></ion-icon>
+                    </div>
+                    <h3 class="feature-title">Modo Oscuro</h3>
+                    <p class="feature-text">Interfaz adaptada para uso nocturno con colores cuidadosamente seleccionados para no fatigar tus ojos.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <ion-icon name="phone-portrait-outline"></ion-icon>
+                    </div>
+                    <h3 class="feature-title">Diseño Nativo iOS</h3>
+                    <p class="feature-text">Interfaz familiar que se siente como una app nativa de Apple, con glassmorphism y animaciones fluidas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download" id="download">
+        <div class="download-container">
+            <h2 class="download-title reveal">Instala <span class="brand">pesso</span> en tu iPhone</h2>
+            <p class="download-subtitle reveal">Sigue estos simples pasos para instalar la app en menos de 1 minuto</p>
+
+            <div class="install-steps reveal">
+                <h3 class="install-title">
+                    <ion-icon name="phone-portrait-outline"></ion-icon>
+                    Guía de Instalación
+                </h3>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Visita la web desde Safari</h3>
+                        <p>Abre Safari en tu iPhone y ve a <strong>pessoapp.netlify.app</strong>. Asegúrate de usar Safari, ya que es el único navegador que permite instalar PWAs en iOS.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Toca el botón Compartir</h3>
+                        <p>Busca el botón <span class="ios-icon"><ion-icon name="share-outline"></ion-icon> Compartir</span> en la barra de herramientas de Safari (abajo o arriba).</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Selecciona "Agregar a Inicio"</h3>
+                        <p>Desplázate hacia abajo en el menú y toca <span class="ios-icon"><ion-icon name="add-circle-outline"></ion-icon> Agregar a Inicio</span>. Puede que necesites desplazarte un poco.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Confirma la instalación</h3>
+                        <p>Toca <strong>"Agregar"</strong> en la esquina superior derecha. ¡Listo! La app aparecerá en tu pantalla de inicio como cualquier otra app.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Abre y configura</h3>
+                        <p>Toca el icono de <strong>pesso</strong> en tu home screen. Crea tu PIN de 4 dígitos y comienza a ahorrar de forma inteligente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2 class="cta-title reveal">¿Listo para empezar a ahorrar?</h2>
+        <p class="cta-text reveal">Únete ahora y comienza a gestionar tu dinero con pesso</p>
+        <a href="#download" class="btn btn-white reveal">
+            <ion-icon name="download-outline"></ion-icon>
+            Instalar Ahora
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <p class="footer-text">© 2026 Pesso. Hecho con ❤️ para ahorradores inteligentes</p>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacidad</a>
+                <a href="#" class="footer-link">Términos</a>
+                <a href="#" class="footer-link">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const isDark = html.getAttribute('data-theme') === 'dark';
+
+            if (isDark) {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('pesso_landing_theme', 'light');
+                icon.setAttribute('name', 'moon-outline');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('pesso_landing_theme', 'dark');
+                icon.setAttribute('name', 'sunny-outline');
+            }
+        }
+
+        // Load saved theme
+        (function() {
+            const savedTheme = localStorage.getItem('pesso_landing_theme');
+            const icon = document.getElementById('themeIcon');
+
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                icon.setAttribute('name', 'sunny-outline');
+            }
+        })();
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Phone keypad interaction
+        document.querySelectorAll('.phone-key').forEach(key => {
+            key.addEventListener('click', function() {
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 100);
+            });
+        });
+    </script>
+
+</body>
+</html>
