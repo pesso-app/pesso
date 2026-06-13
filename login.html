@@ -16,17 +16,11 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-180.png">
     <link rel="apple-touch-icon" sizes="152x152" href="assets/icons/icon-152.png">
 
-    <!-- iPhone SE, 8 -->
-    <link rel="apple-touch-startup-image" href="splash/splash-750x1334.png" 
-      media="(device-width: 375px) and (device-height: 667px)">
-
-    <!-- iPhone 12, 13, 14 -->
-    <link rel="apple-touch-startup-image" href="splash/splash-1170x2532.png" 
-      media="(device-width: 390px) and (device-height: 844px)">
-
-    <!-- iPhone 14 Pro, 15, 15 Pro -->
-    <link rel="apple-touch-startup-image" href="splash/splash-1290x2796.png" 
-      media="(device-width: 393px) and (device-height: 852px)">      
+    <!-- 2. PWACompat - Lee el manifest y genera meta tags para iOS -->
+    <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.17/pwacompat.min.js"
+     integrity="sha384-g8rRrBrRkU/LvwWKOElY9zrsSRl7FA1R8t9pKqPO9hE6uVhONz+YjMkZL3VKZ5Kd"
+     crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="assets/icons/icon-152.png">  
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/icons/favicon.png" sizes="32x32">
@@ -44,9 +38,23 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        :root {
+            --bg: #F4F4F6;
+            --text: #000000;
+            --text-secondary: #8E8E93;
+            --success: #00D632;
+        }
+
+        /* Si el tema oscuro está activo */
+        [data-theme="dark"] {
+            --bg: #000000;
+            --text: #FFFFFF;
+            --text-secondary: #8E8E93;
+        }
+
         html {
             height: 100%;
-            background: #1C5CCF;
+            background: var(--bg);
         }
 
         body {
@@ -58,21 +66,14 @@
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            background: linear-gradient(135deg, 
-                #1C5CCF 0%, 
-                #154aad 50%, 
-                #0f3d8a 100%);
-            background-attachment: fixed;
+            background: var(--bg);
             overscroll-behavior-y: none;
         }
 
         #loginScreen {
             position: fixed;
             inset: 0;
-            background: linear-gradient(135deg, 
-                #1C5CCF 0%, 
-                #154aad 50%, 
-                #0f3d8a 100%);
+            background: var(--bg);
             z-index: 99999;
             min-height: 100vh;
             min-height: 100dvh;
@@ -83,16 +84,6 @@
             padding-bottom: env(safe-area-inset-bottom);
             padding-left: env(safe-area-inset-left);
             padding-right: env(safe-area-inset-right);
-        }
-
-        #loginScreen::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 40%);
-            pointer-events: none;
         }
 
         .login-container {
@@ -111,16 +102,15 @@
 
         .login-title {
             font-family: "Varela Round", sans-serif;
-            color: white;
+            color: var(--text);
             font-size: 64px;
             font-weight: 400;
             margin-bottom: 8px;
-            letter-spacing: -1px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            letter-spacing: -1.5px;
         }
 
         .login-subtitle {
-            color: rgba(255,255,255,0.85);
+            color: var(--text-secondary);
             font-size: 16px;
             margin-bottom: 50px;
             font-weight: 500;
@@ -136,27 +126,24 @@
         .pin-dots span {
             width: 14px;
             height: 14px;
-            border: 2px solid rgba(255,255,255,0.4);
+            border: 2px solid var(--text-secondary);
             border-radius: 50%;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(4px);
+            transition: all 0.2s ease;
+            background: transparent;
         }
 
         .pin-dots span.filled {
-            background: white;
-            border-color: white;
-            transform: scale(1.2);
-            box-shadow: 0 0 15px rgba(255,255,255,0.6);
+            background: var(--text);
+            border-color: var(--text);
+            transform: scale(1.1);
         }
 
         .pin-error {
-            color: #FFD700;
+            color: #FF3B30;
             font-size: 14px;
             margin-bottom: 20px;
             min-height: 20px;
             font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .pin-pad {
@@ -165,12 +152,6 @@
             gap: 16px;
             width: 100%;
             max-width: 280px;
-            padding: 20px;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 28px;
-            border: 1px solid rgba(255,255,255,0.2);
             margin: 0 auto;
         }
 
@@ -179,30 +160,25 @@
             height: 72px;
             border-radius: 50%;
             border: none;
-            background: rgba(255,255,255,0.15);
-            color: white;
-            font-size: 28px;
+            background: transparent;
+            color: var(--text);
+            font-size: 32px;
             font-weight: 400;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .pin-pad button:hover {
-            background: rgba(255,255,255,0.25);
-            transform: scale(1.05);
+            transition: all 0.15s ease;
         }
 
         .pin-pad button:active {
-            background: rgba(255,255,255,0.35);
-            transform: scale(0.92);
+            background: rgba(120, 120, 128, 0.1);
+            transform: scale(0.9);
+        }
+
+        [data-theme="dark"] .pin-pad button:active {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .pin-pad .bio-btn {
@@ -212,7 +188,7 @@
         @keyframes fadeIn {
             from { 
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to { 
                 opacity: 1;
@@ -221,7 +197,7 @@
         }
 
         .fade-in {
-            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @media (max-width: 380px) {
@@ -231,14 +207,13 @@
 
             .pin-pad {
                 max-width: 260px;
-                padding: 16px;
                 gap: 12px;
             }
 
             .pin-pad button {
                 width: 64px;
                 height: 64px;
-                font-size: 24px;
+                font-size: 28px;
             }
         }
 
@@ -285,6 +260,14 @@
     <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"></script>
 
     <script>
+        // Aplicar tema inmediatamente
+        (function() {
+            const isDarkMode = localStorage.getItem('pesso_dark_mode') === 'true';
+            if (isDarkMode) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+
         let currentPin = '';
         const correctPin = localStorage.getItem('pesso_pin') || '1234';
 

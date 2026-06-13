@@ -392,28 +392,20 @@
     <!-- Bottom Menu -->
     <div class="floating-menu-container">
         <nav class="floating-menu">
-            <a href="index.html" class="menu-item" data-page="home">
-                <ion-icon name="home-outline"></ion-icon>
-                <strong>Home</strong>
-                <div class="active-indicator"></div>
+            <a href="index.html" class="menu-balance-item" id="menuBalance" data-page="home">
+                $0.00
             </a>
-
             <a href="goals.html" class="menu-item" data-page="goals">
-                <ion-icon name="flag-outline"></ion-icon>
-                <strong>Goals</strong>
-                <div class="active-indicator"></div>
+                <ion-icon name="wallet-outline"></ion-icon>
             </a>
-
+            <a href="index.html#transfer" class="menu-item" style="color: var(--accent);">
+                <ion-icon name="logo-usd"></ion-icon>
+            </a>
             <a href="alerts.html" class="menu-item active" data-page="activity">
                 <ion-icon name="notifications-outline"></ion-icon>
-                <strong>Activity</strong>
-                <div class="active-indicator"></div>
             </a>
-
             <a href="profile.html" class="menu-item" data-page="me">
                 <ion-icon name="person-outline"></ion-icon>
-                <strong>Me</strong>
-                <div class="active-indicator"></div>
             </a>
         </nav>
     </div>
@@ -453,6 +445,12 @@
                 document.documentElement.setAttribute('data-theme', 'dark');
             }
             
+            const savedBalance = localStorage.getItem('pesso_balance') || '0.00';
+            const menuBalanceEl = document.getElementById('menuBalance');
+            if (menuBalanceEl) {
+                menuBalanceEl.textContent = `$${savedBalance}`;
+            }
+
             initAlerts();
         });
 

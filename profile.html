@@ -96,22 +96,20 @@
         }
 
         .settings-header-glass {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--text-secondary);
-            margin: 0 0 10px 12px;
+            margin: 0 0 8px 12px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
 
         .settings-group-glass {
             margin: 0;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: var(--bg-card);
             border-radius: 16px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-sm), inset 0 1px 0 var(--glass-border-strong);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
             width: 100%;
             overflow: hidden;
         }
@@ -119,8 +117,8 @@
         .settings-item-glass {
             display: flex;
             align-items: center;
-            padding: 18px 16px;
-            border-bottom: 1px solid var(--glass-border);
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
             cursor: pointer;
             transition: all 0.2s ease;
             background: transparent;
@@ -131,54 +129,20 @@
         }
 
         .settings-item-glass:active {
-            background: rgba(0, 122, 255, 0.05);
+            background: var(--glass-bg-hover);
         }
 
         .settings-icon-glass {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 14px;
-            font-size: 20px;
+            font-size: 24px;
+            color: var(--text);
             flex-shrink: 0;
-        }
-
-        .settings-icon-glass.blue {
-            background: rgba(0, 122, 255, 0.12);
-            color: var(--primary);
-        }
-
-        .settings-icon-glass.green {
-            background: rgba(52, 199, 89, 0.12);
-            color: var(--success);
-        }
-
-        .settings-icon-glass.orange {
-            background: rgba(255, 149, 0, 0.12);
-            color: var(--warning);
-        }
-
-        .settings-icon-glass.purple {
-            background: rgba(175, 82, 222, 0.12);
-            color: var(--purple);
-        }
-
-        .settings-icon-glass.pink {
-            background: rgba(255, 45, 85, 0.12);
-            color: var(--pink);
-        }
-
-        .settings-icon-glass.gray {
-            background: rgba(120, 120, 128, 0.12);
-            color: var(--text-secondary);
-        }
-
-        .settings-icon-glass.teal {
-            background: rgba(48, 209, 88, 0.12);
-            color: #30D158;
+            background: transparent !important;
         }
 
         .settings-content-glass {
@@ -189,13 +153,13 @@
         }
 
         .settings-label-glass {
-            font-size: 17px;
+            font-size: 16px;
             color: var(--text);
             font-weight: 500;
         }
 
         .settings-value-glass {
-            font-size: 15px;
+            font-size: 14px;
             color: var(--text-secondary);
             margin-right: 8px;
             font-weight: 500;
@@ -203,19 +167,19 @@
 
         .settings-arrow-glass {
             color: var(--text-secondary);
-            font-size: 20px;
+            font-size: 18px;
             opacity: 0.4;
         }
 
         /* Toggle switch */
         .toggle-switch-glass {
-            width: 51px;
-            height: 31px;
-            background: rgba(120, 120, 128, 0.3);
-            border-radius: 31px;
+            width: 48px;
+            height: 28px;
+            background: rgba(120, 120, 128, 0.2);
+            border-radius: 28px;
             position: relative;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.2s;
         }
 
         .toggle-switch-glass.active {
@@ -225,14 +189,14 @@
         .toggle-switch-glass::after {
             content: '';
             position: absolute;
-            width: 27px;
-            height: 27px;
+            width: 24px;
+            height: 24px;
             background: white;
             border-radius: 50%;
             top: 2px;
             left: 2px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .toggle-switch-glass.active::after {
@@ -887,14 +851,17 @@
     <div id="appCapsule" class="profile-container">
 
         <!-- Header Horizontal -->
-        <div class="profile-header-glass">
-            <div class="profile-avatar-glass" onclick="changeAvatar()">
-                <span id="avatarInitial">S</span>
+        <div class="profile-header-glass" style="position: relative; padding: 24px; border-bottom: 1px solid var(--border-color); margin-bottom: 24px;">
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;">
+                <div class="profile-avatar-glass" onclick="changeAvatar()" style="width: 72px; height: 72px; font-size: 28px; margin-bottom: 10px;">
+                    <span id="avatarInitial">S</span>
+                </div>
+                <div class="profile-name-glass" id="displayName" style="font-size: 20px; font-weight: 800; margin-bottom: 2px;">Sixto M. Henriquez</div>
+                <div class="profile-role-glass" id="userRole" style="font-size: 14px; font-weight: 500;">Designer</div>
             </div>
-            <div class="profile-info-horizontal">
-                <div class="profile-name-glass" id="displayName">Sixto M. Henriquez</div>
-                <div class="profile-role-glass" id="userRole">Designer</div>
-            </div>
+            <a href="index.html" style="position: absolute; top: 16px; right: 16px; font-size: 28px; color: var(--text); text-decoration: none; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--glass-bg-hover);">
+                <ion-icon name="close-outline"></ion-icon>
+            </a>
         </div>
 
         <!-- Balance Preview -->
@@ -966,22 +933,6 @@
             </div>
         </div>
 
-        <!-- Share Section -->
-        <div class="settings-section-glass">
-            <div class="settings-header-glass">Share</div>
-            <div class="settings-group-glass">
-                <div class="settings-item-glass" onclick="openSheet('referSheet')">
-                    <div class="settings-icon-glass pink">
-                        <ion-icon name="gift-outline"></ion-icon>
-                    </div>
-                    <div class="settings-content-glass">
-                        <span class="settings-label-glass">Refer a Friend</span>
-                        <ion-icon name="chevron-forward-outline" class="settings-arrow-glass"></ion-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Security Section -->
         <div class="settings-section-glass">
             <div class="settings-header-glass">Security</div>
@@ -1030,11 +981,11 @@
                 
                 <div class="settings-item-glass" onclick="openSheet('importSheet')">
                     <div class="settings-icon-glass green">
-                        <ion-icon name="upload-outline"></ion-icon>
+                        <ion-icon name="cloud-upload-outline"></ion-icon>
                     </div>
                     <div class="settings-content-glass">
                         <span class="settings-label-glass">Importar Datos</span>
-                        <ion-icon name="arrow-redo-outline" class="settings-arrow-glass"></ion-icon>
+                        <ion-icon name="chevron-forward-outline" class="settings-arrow-glass"></ion-icon>
                     </div>
                 </div>
             </div>
@@ -1224,38 +1175,7 @@
         </div>
     </div>
 
-    <!-- Refer a Friend Sheet -->
-    <div id="referSheet" class="modal-sheet">
-        <div class="modal-sheet-backdrop" onclick="closeSheet('referSheet')"></div>
-        <div class="modal-sheet-content">
-            <div class="modal-handle"></div>
-            <div class="modal-sheet-header">
-                <h3 class="modal-sheet-title">Refer a Friend</h3>
-            </div>
-            <div class="modal-sheet-body">
-                <div class="referral-box">
-                    <div style="font-size: 40px; margin-bottom: 8px;">🎁</div>
-                    <div class="referral-text">Share Pesso with friends and both get $5 when they sign up!</div>
-                    <div class="referral-code" id="referralCode">PESSO2024</div>
-                    <div class="referral-text">Your unique referral code</div>
-                    <button class="btn-copy" onclick="copyReferralCode()">
-                        <ion-icon name="copy-outline" style="margin-right: 8px;"></ion-icon>
-                        Copy Code
-                    </button>
-                </div>
-                <p style="text-align: center; color: var(--text-secondary); font-size: 14px; line-height: 1.5;">
-                    Share your code via text, email, or social media. Your friend must enter this code during signup.
-                </p>
-            </div>
-            <div class="modal-sheet-footer">
-                <button class="btn-sheet btn-sheet-secondary" onclick="closeSheet('referSheet')">Close</button>
-                <button class="btn-sheet btn-sheet-primary" onclick="shareReferral()">
-                    <ion-icon name="share-outline" style="margin-right: 8px;"></ion-icon>
-                    Share
-                </button>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Export Sheet -->
     <div id="exportSheet" class="modal-sheet">
@@ -1381,25 +1301,20 @@
     <!-- Bottom Menu -->
     <div class="floating-menu-container">
         <nav class="floating-menu">
-            <a href="index.html" class="menu-item" data-page="home">
-                <ion-icon name="home-outline"></ion-icon>
-                <strong>Home</strong>
-                <div class="active-indicator"></div>
+            <a href="index.html" class="menu-balance-item" id="menuBalance" data-page="home">
+                $0.00
             </a>
             <a href="goals.html" class="menu-item" data-page="goals">
-                <ion-icon name="flag-outline"></ion-icon>
-                <strong>Goals</strong>
-                <div class="active-indicator"></div>
+                <ion-icon name="wallet-outline"></ion-icon>
+            </a>
+            <a href="index.html#transfer" class="menu-item" style="color: var(--accent);">
+                <ion-icon name="logo-usd"></ion-icon>
             </a>
             <a href="alerts.html" class="menu-item" data-page="activity">
                 <ion-icon name="notifications-outline"></ion-icon>
-                <strong>Activity</strong>
-                <div class="active-indicator"></div>
             </a>
             <a href="profile.html" class="menu-item active" data-page="me">
                 <ion-icon name="person-outline"></ion-icon>
-                <strong>Me</strong>
-                <div class="active-indicator"></div>
             </a>
         </nav>
     </div>
@@ -1456,6 +1371,11 @@
             // Load balance
             const savedBalance = localStorage.getItem('pesso_balance') || '0.00';
             document.getElementById('profileBalance').textContent = `$${savedBalance}`;
+            
+            const menuBalanceEl = document.getElementById('menuBalance');
+            if (menuBalanceEl) {
+                menuBalanceEl.textContent = `$${savedBalance}`;
+            }
             
             // Generate referral code based on user name
             const referralBase = savedName.replace(/\s+/g, '').toUpperCase().substring(0, 6);

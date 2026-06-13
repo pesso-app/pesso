@@ -47,6 +47,12 @@ async function initApp() {
         updateUserName();
         updateActivity();
 
+        // Check hash routing for transfer modal
+        if (window.location.hash === '#transfer') {
+            setTimeout(showTransferModal, 200);
+            window.history.replaceState(null, null, ' ');
+        }
+
         console.log('App inicializada correctamente. Usuario:', userName);
 
     } catch (error) {
@@ -69,9 +75,9 @@ function showMainApp() {
 
 function updateUserName() {
     const savedName = localStorage.getItem('pesso_user') || 'Maria';
-    const userNameEl = document.getElementById('userName');
-    if (userNameEl) {
-        userNameEl.textContent = `Hi 👋🏼, ${savedName}`;
+    const initialEl = document.getElementById('headerAvatarInitial');
+    if (initialEl) {
+        initialEl.textContent = savedName.charAt(0).toUpperCase();
     }
 }
 
@@ -266,6 +272,11 @@ function updateTotal() {
         balanceEl.textContent = `$${formatted}`;
     }
 
+    const menuBalanceEl = document.getElementById('menuBalance');
+    if (menuBalanceEl) {
+        menuBalanceEl.textContent = `$${formatted}`;
+    }
+
     localStorage.setItem('pesso_balance', formatted);
 }
 
@@ -302,13 +313,23 @@ function renderSavingsCards() {
             `;
         }
 
+        // Determine colored circle class
+        let iconBg = 'bg-primary';
+        if (env.icon === 'airplane' || env.icon === 'home') {
+            iconBg = 'bg-info';
+        } else if (env.icon === 'cash' || env.icon === 'trending-up') {
+            iconBg = 'bg-success';
+        } else if (env.icon === 'medical') {
+            iconBg = 'bg-danger';
+        }
+
         card.innerHTML = `
             <div class="ios-card-header compact">
                 <div>
-                    <div class="ios-card-title">${env.name}</div>
+                    <div class="ios-card-title">${env.name} <ion-icon name="chevron-forward-outline" style="font-size: 11px; opacity: 0.4; vertical-align: middle; margin-left: 2px;"></ion-icon></div>
                     <div class="ios-card-subtitle">Savings</div>
                 </div>
-                <div class="icon-box bg-primary compact-icon">
+                <div class="icon-box ${iconBg} compact-icon">
                     <ion-icon name="${env.icon || 'cash'}-outline"></ion-icon>
                 </div>
             </div>

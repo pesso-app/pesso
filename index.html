@@ -36,26 +36,32 @@
             <!-- HOME SCREEN -->
             <div id="screen-home" class="screen-content active">
                 <div class="header-large-title">
-                    <h2 id="userName" style="color: var(--text);">Hi 👋🏼</h2>
+                    <h2 id="userName">Money</h2>
+                    <div class="header-avatar" id="headerAvatarBtn" onclick="location.href='profile.html'">
+                        <span id="headerAvatarInitial">M</span>
+                    </div>
                 </div>
 
                 <div class="section mt-4">
-                    <!-- Balance Container Glass -->
+                    <!-- Balance Container Cash App Style -->
                     <div class="balance-container">
-                        <div class="text-center">
-                            <span class="balance font-weight-bold" id="totalBalance">$0.00</span>
-                            <p class="text-balance">Total Balance</p>
+                        <div class="balance-header-row">
+                            <span class="text-balance">Cash balance</span>
+                            <a href="#" class="account-routing-link" onclick="showTransferModal(); return false;">
+                                Account & routing <ion-icon name="chevron-forward-outline" style="font-size: 12px;"></ion-icon>
+                            </a>
                         </div>
-                    </div>
-
-                    <!-- Balance Actions -->
-                    <div class="balance-actions">
-                        <button type="button" class="btn btn-primary btn-lg rounded" onclick="showAddModal()">
-                            Add Cash
-                        </button>
-                        <button type="button" class="btn btn-secondary btn-lg rounded" onclick="showWithdrawModal()">
-                            Cash Out
-                        </button>
+                        <span class="balance" id="totalBalance">$0.00</span>
+                        
+                        <!-- Balance Actions inside Card -->
+                        <div class="balance-actions">
+                            <button type="button" class="btn" onclick="showAddModal()">
+                                Add money
+                            </button>
+                            <button type="button" class="btn" onclick="showWithdrawModal()">
+                                Withdraw
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -106,28 +112,23 @@
 
         </div>
 
-        <!-- Menú Flotante -->
+        <!-- Menú Flotante Estilo Cash App -->
         <div class="floating-menu-container">
             <nav class="floating-menu">
-                <a href="index.html" class="menu-item active" data-page="home">
-                    <ion-icon name="home-outline"></ion-icon>
-                    <strong>Home</strong>
-                    <div class="active-indicator"></div>
+                <a href="index.html" class="menu-balance-item active" id="menuBalance" data-page="home">
+                    $0.00
                 </a>
                 <a href="goals.html" class="menu-item" data-page="goals">
-                    <ion-icon name="flag-outline"></ion-icon>
-                    <strong>Goals</strong>
-                    <div class="active-indicator"></div>
+                    <ion-icon name="wallet-outline"></ion-icon>
+                </a>
+                <a href="#" class="menu-item" onclick="showTransferModal(); return false;" style="color: var(--accent);">
+                    <ion-icon name="logo-usd"></ion-icon>
                 </a>
                 <a href="alerts.html" class="menu-item" data-page="activity">
                     <ion-icon name="notifications-outline"></ion-icon>
-                    <strong>Activity</strong>
-                    <div class="active-indicator"></div>
                 </a>
                 <a href="profile.html" class="menu-item" data-page="me">
                     <ion-icon name="person-outline"></ion-icon>
-                    <strong>Me</strong>
-                    <div class="active-indicator"></div>
                 </a>
             </nav>
         </div>
